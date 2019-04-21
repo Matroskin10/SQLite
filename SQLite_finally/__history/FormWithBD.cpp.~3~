@@ -1,0 +1,147 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "FormWithBD.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma link "VirtualTrees"
+#pragma resource "*.dfm"
+#include "sqlite3.h"
+#include <vector>
+#include <algorithm>
+#include <sstream>
+
+TForm2 *Form2;
+//---------------------------------------------------------------------------
+__fastcall TForm2::TForm2(TComponent* Owner)
+	: TForm(Owner)
+{
+
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm2::VirtualStringTreeGetText(TBaseVirtualTree *Sender, PVirtualNode Node,
+          TColumnIndex Column, TVSTTextType TextType, UnicodeString &CellText)
+
+{
+if(!Node) return;
+Structure_table_sqlite *nodeData = (Structure_table_sqlite *)Sender->GetNodeData(Node);
+switch(Column)
+{
+
+case 0: CellText = nodeData->id;
+break;
+case 1: CellText = (UnicodeString)nodeData->url.c_str();
+break;
+case 2: CellText = nodeData->visit_count;
+break;
+}
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TForm2::Button1Click(TObject *Sender)
+{
+const char * DataBasePath = "History";
+sqlite3* Database;
+int rc = sqlite3_open(DataBasePath, &Database);
+const char * showTable = "Select * from urls;";
+sqlite3_stmt * pStatement;
+int result = sqlite3_prepare_v2(Database, showTable, -1, &pStatement, NULL);
+if (result != SQLITE_OK)
+{
+std::cout << "SQL query execution error!" << std::endl;
+sqlite3_close(Database);
+sqlite3_finalize(pStatement);
+}
+VirtualStringTree->Clear();
+VirtualStringTree->NodeDataSize = sizeof(Structure_table_sqlite);
+VirtualStringTree->BeginUpdate();
+for (int i = 0; i < 39; i++) {
+PVirtualNode selectedNode = VirtualStringTree->AddChild(VirtualStringTree->RootNode);
+Structure_table_sqlite *nodeData = (Structure_table_sqlite*) VirtualStringTree->GetNodeData(selectedNode);
+int result = sqlite3_step(pStatement);
+if (result == SQLITE_ROW)
+{
+nodeData->id = sqlite3_column_int(pStatement, 0);
+nodeData->url = (UnicodeString)(char*)sqlite3_column_text(pStatement, 1);
+nodeData->visit_count = sqlite3_column_int(pStatement, 3);
+}
+}
+VirtualStringTree->EndUpdate();
+sqlite3_close(Database);
+sqlite3_finalize(pStatement);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm2::Button2Click(TObject *Sender)
+{
+if (!VirtualStringTree->SelectedCount) {
+return;
+}
+const char * DataBasePath = "History";
+sqlite3* Database;
+int rc = sqlite3_open(DataBasePath, &Database);
+std::string insertQuery = "insert into temp (id) values ();";
+std::size_t shift = insertQuery.find(");");
+std::string clearQuery = "delete from temp;";
+std::vector<int> indexVector;
+PVirtualNode selectedNode = VirtualStringTree->GetFirstSelected();
+Structure_table_sqlite *nodeData = (Structure_table_sqlite *)VirtualStringTree->GetNodeData(selectedNode);
+indexVector.push_back(nodeData->id);
+for (int i = 0; i < VirtualStringTree->SelectedCount - 1; i++) {
+selectedNode = VirtualStringTree->GetNextSelected(selectedNode);
+Structure_table_sqlite *nodeData = (Structure_table_sqlite *)VirtualStringTree->GetNodeData(selectedNode);
+indexVector.push_back(nodeData->id);
+}
+char *zErrMsg = 0;
+int rc2 = sqlite3_exec(Database, clearQuery.c_str(), NULL, NULL, &zErrMsg);
+VirtualStringTree->DeleteSelectedNodes();
+for (std::vector<int>::iterator it = indexVector.begin();
+it != indexVector.end(); ++it){
+std::ostringstream vts;
+vts << *it;
+std::string subString = vts.str();
+std::string tempQuery = insertQuery;
+tempQuery.insert(shift, subString);
+int rc3 = sqlite3_exec(Database, tempQuery.c_str(), NULL, NULL, &zErrMsg);
+if( rc3 != SQLITE_OK ) {
+return;
+}
+}
+std::string deleteQuery = "delete from urls where id in (select id from temp);";
+int rc4 = sqlite3_exec(Database, deleteQuery.c_str(), NULL, NULL, &zErrMsg);
+if( rc4 != SQLITE_OK ) {
+return;
+}
+sqlite3_close(Database);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm2::Button3Click(TObject *Sender)
+{
+const char * DataBasePath = "History";
+sqlite3* Database;
+int rc = sqlite3_open(DataBasePath, &Database);
+const char * deleteTable = "Delete from urls;";
+sqlite3_stmt * pStatement;
+int result = sqlite3_prepare_v2(Database, deleteTable, -1, &pStatement, NULL);
+	if (result != SQLITE_OK)
+	{
+		std::cout << "SQL query execution error!" << std::endl;
+		sqlite3_close(Database);
+		sqlite3_finalize(pStatement);
+	}
+VirtualStringTree->BeginUpdate();
+result = sqlite3_step(pStatement);
+if(result != SQLITE_DONE)
+{
+	std::cout << "SQL query execution error!" << std::endl;
+	sqlite3_close(Database);
+	sqlite3_finalize(pStatement);
+}
+VirtualStringTree->EndUpdate();
+sqlite3_close(Database);
+sqlite3_finalize(pStatement);
+}
+//---------------------------------------------------------------------------

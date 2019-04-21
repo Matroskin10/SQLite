@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.492,C:\Users\devil\Desktop\SQLite_finally\FormWithBD.cpp=C:\Users\devil\Desktop\SQLite_finally\Unit2.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.847,C:\Users\devil\Desktop\SQLite_finally\Unit2.dfm=D:\RAD STUDIO\Проекь\Unit2.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.492,C:\Users\devil\Desktop\SQLite_finally\FormWithBD.h=C:\Users\devil\Desktop\SQLite_finally\Unit2.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.412,=C:\Users\devil\Desktop\SQLite_finally\sqlite3.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.936,C:\Users\devil\Desktop\SQLite_finally\Project3.cbproj=D:\RAD STUDIO\Проекь\Project3.cbproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.395,=C:\Users\devil\Desktop\SQLite_finally\sqlite3.c</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.847,C:\Users\devil\Desktop\SQLite_finally\Unit2.cpp=D:\RAD STUDIO\Проекь\Unit2.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.138,C:\Users\devil\Desktop\SQLite_finally\Project3PCH1.h=D:\RAD STUDIO\Проекь\Project3PCH1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.492,C:\Users\devil\Desktop\SQLite_finally\FormWithBD.dfm=C:\Users\devil\Desktop\SQLite_finally\Unit2.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.083,=D:\RAD STUDIO\Проекь\Unit2.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.847,C:\Users\devil\Desktop\SQLite_finally\Unit2.h=D:\RAD STUDIO\Проекь\Unit2.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.418,=C:\Users\devil\Desktop\SQLite_finally\sqlite3ext.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.373,=D:\RAD STUDIO\Проекь\Project3PCH1.h</Transaction>
+  </Transactions>
+</BorlandProject>

@@ -1,0 +1,69 @@
+object Form2: TForm2
+  Left = 0
+  Top = 0
+  Caption = 'Form2'
+  ClientHeight = 350
+  ClientWidth = 642
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Button2: TButton
+    Left = 464
+    Top = 47
+    Width = 177
+    Height = 25
+    Caption = #1059#1076#1072#1083#1080#1090#1100' '#1103#1095#1077#1081#1082#1091'('#1080')'
+    TabOrder = 0
+    OnClick = Button2Click
+  end
+  object Button3: TButton
+    Left = 464
+    Top = 78
+    Width = 177
+    Height = 27
+    Caption = #1054#1095#1080#1089#1090#1080#1090#1100' '#1089#1086#1076#1078#1077#1088#1078#1080#1084#1086#1077' '#1090#1072#1073#1083#1080#1094#1099
+    TabOrder = 1
+    OnClick = Button3Click
+  end
+  object VirtualStringTree: TVirtualStringTree
+    Left = 8
+    Top = 8
+    Width = 441
+    Height = 305
+    Header.AutoSizeIndex = 0
+    Header.Options = [hoColumnResize, hoDblClickResize, hoDrag, hoHotTrack, hoShowHint, hoShowSortGlyphs, hoVisible, hoFullRepaintOnResize, hoHeightResize]
+    TabOrder = 2
+    TreeOptions.PaintOptions = [toHideSelection, toHotTrack, toShowButtons, toShowDropmark, toShowHorzGridLines, toShowVertGridLines, toThemeAware, toUseBlendedImages]
+    TreeOptions.SelectionOptions = [toFullRowSelect, toMultiSelect]
+    OnGetText = VirtualStringTreeGetText
+    Columns = <
+      item
+        Position = 0
+        Text = 'id'
+        Width = 51
+      end
+      item
+        Position = 1
+        Text = 'url'
+      end
+      item
+        Position = 2
+        Text = 'visit_count'
+      end>
+  end
+  object Button1: TButton
+    Left = 464
+    Top = 16
+    Width = 177
+    Height = 25
+    Caption = #1042#1099#1074#1077#1089#1090#1080' '#1090#1072#1073#1083#1080#1094#1091
+    TabOrder = 3
+    OnClick = Button1Click
+  end
+end
